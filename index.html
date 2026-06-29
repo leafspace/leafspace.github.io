@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>张立飞 - Agent 开发工程师电子简历</title>
+  <style>
+    :root {
+      --bg: oklch(95% 0.006 110);
+      --paper: oklch(100% 0 0);
+      --side: oklch(87% 0.004 115);
+      --fg: oklch(25% 0.018 110);
+      --muted: oklch(47% 0.012 110);
+      --line: oklch(32% 0.014 110);
+      --soft-line: oklch(78% 0.006 110);
+      --accent: oklch(73% 0.18 132);
+      --accent-dark: oklch(52% 0.15 132);
+      --bar-bg: oklch(76% 0.004 110);
+      --font-display: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+      --font-body: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px),
+        linear-gradient(180deg, color-mix(in oklch, var(--accent), transparent 90%), transparent 420px),
+        var(--bg);
+      background-size: 28px 28px, auto, auto;
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      padding: 14px;
+      background: color-mix(in oklch, var(--bg), transparent 8%);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .toolbar-inner {
+      width: min(1180px, calc(100vw - 32px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .doc-title {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .button {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid color-mix(in oklch, var(--accent-dark), transparent 42%);
+      border-radius: 3px;
+      background: var(--paper);
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+    .button:hover { transform: translateY(-1px); background: color-mix(in oklch, var(--accent), white 72%); }
+    .button.primary { background: var(--accent); color: oklch(99% 0.004 120); }
+
+    .page-wrap {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 30px auto 72px;
+    }
+
+    .resume-sheet {
+      min-height: 1480px;
+      display: grid;
+      grid-template-columns: 410px minmax(0, 1fr);
+      background: var(--paper);
+      box-shadow: 0 24px 70px rgba(34, 42, 30, 0.18);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .sidebar {
+      background: var(--side);
+      padding: 76px 0 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px 80px auto;
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255,255,255,0.7);
+      transform: rotate(18deg);
+    }
+
+    .profile {
+      padding: 0 38px 38px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 190px;
+      height: 190px;
+      margin: 0 auto 34px;
+      border-radius: 50%;
+      border: 12px solid #fff;
+      background: oklch(91% 0.03 205);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 36%;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 48px;
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .role-line {
+      margin: 14px 0 0;
+      font-size: 19px;
+      color: var(--fg);
+      letter-spacing: 0.01em;
+    }
+
+    .ribbon {
+      position: relative;
+      width: calc(100% + 18px);
+      margin: 34px 0 24px 0;
+      padding: 12px 32px;
+      background: var(--accent);
+      color: white;
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .ribbon::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translateX(-18px);
+      width: 0;
+      height: 0;
+      border-top: 26px solid transparent;
+      border-bottom: 26px solid transparent;
+      border-right: 18px solid var(--accent);
+    }
+
+    .ribbon::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -13px;
+      width: 0;
+      height: 0;
+      border-left: 18px solid color-mix(in oklch, var(--accent-dark), black 10%);
+      border-bottom: 13px solid transparent;
+    }
+
+    .side-section { position: relative; z-index: 1; }
+    .side-body { padding: 0 28px; }
+
+    .info-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-list li {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 6px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .info-list b {
+      color: var(--fg);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .info-list span {
+      min-width: 0;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: keep-all;
+    }
+
+    .skill-block { margin-top: 24px; }
+    .skill-group-title {
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--fg);
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .bar {
+      height: 11px;
+      background: var(--bar-bg);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: var(--value);
+      background: var(--accent);
+    }
+
+    .main {
+      padding: 78px 66px 58px;
+    }
+
+    .section {
+      margin-bottom: 42px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .section-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .section-icon svg {
+      width: 27px;
+      height: 27px;
+      stroke-width: 2;
+    }
+
+    .section-title {
+      padding-bottom: 13px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 31px;
+      line-height: 1.1;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.86;
+    }
+
+    .intro p {
+      margin: 0;
+    }
+
+    .intro p + p {
+      margin-top: 10px;
+    }
+
+    .highlight {
+      color: var(--accent-dark);
+      font-weight: 850;
+    }
+
+    .entry {
+      margin-top: 26px;
+    }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid color-mix(in oklch, var(--line), transparent 35%);
+    }
+
+    .entry-meta {
+      flex: 0 0 auto;
+      min-width: 220px;
+      text-align: right;
+    }
+
+    .date {
+      font-family: var(--font-mono);
+      color: var(--fg);
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .entry-role {
+      margin-top: 4px;
+      color: var(--accent-dark);
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+
+    .entry h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 850;
+      letter-spacing: -0.01em;
+    }
+
+    .entry p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.82;
+    }
+
+    .project-copy {
+      margin-top: 8px;
+    }
+
+    .project-copy p + p {
+      margin-top: 8px;
+    }
+
+    .entry ol {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .entry li {
+      position: relative;
+      padding-left: 28px;
+      margin-top: 6px;
+      counter-increment: item;
+    }
+
+    .entry li::before {
+      content: counter(item) "、";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--fg);
+      font-weight: 900;
+    }
+
+    .entry-subtitle {
+      margin: 16px 0 6px;
+      color: var(--fg);
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      padding: 3px 9px;
+      border: 1px solid color-mix(in oklch, var(--accent-dark), transparent 55%);
+      color: var(--accent-dark);
+      background: color-mix(in oklch, var(--accent), white 82%);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: 0.02em;
+    }
+
+    .course-line,
+    .honor-grid {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .honor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 30px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .honor-grid li::before {
+      content: ">";
+      margin-right: 8px;
+      color: var(--fg);
+      font-weight: 900;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      padding: 10px 14px;
+      background: var(--fg);
+      color: #fff;
+      border-radius: 2px;
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      z-index: 40;
+      font-size: 13px;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 980px) {
+      .resume-sheet { grid-template-columns: 1fr; }
+      .sidebar { padding-top: 48px; }
+      .main { padding: 48px 28px; }
+      .entry-head { flex-direction: column; gap: 6px; }
+      .entry-meta {
+        min-width: 0;
+        text-align: left;
+      }
+      .honor-grid { grid-template-columns: 1fr; }
+      .info-list span { white-space: normal; overflow-wrap: anywhere; }
+      .toolbar-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { background: #fff; }
+      .toolbar, .toast { display: none !important; }
+      .page-wrap { width: 100%; margin: 0; }
+      .resume-sheet {
+        min-height: 297mm;
+        box-shadow: none;
+        border: 0;
+        grid-template-columns: 80mm 1fr;
+      }
+      .sidebar { padding-top: 18mm; }
+      .side-body { padding: 0 6mm; }
+      .info-list li {
+        grid-template-columns: 13mm minmax(0, 1fr);
+        gap: 1.5mm;
+        font-size: 13.2px;
+      }
+      .main { padding: 18mm 14mm 12mm; }
+      .section { break-inside: avoid; margin-bottom: 9mm; }
+      .entry { break-inside: avoid; }
+      .entry-head { gap: 8mm; }
+      .entry-meta { min-width: 44mm; }
+      .button { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="toolbar" aria-label="页面操作">
+    <div class="toolbar-inner">
+      <div class="doc-title">参考附件风格 · 电子简历版</div>
+      <div class="actions">
+        <button class="button" type="button" data-copy="leafspace_zhang@163.com">复制邮箱</button>
+        <button class="button" type="button" data-copy="18768468433">复制电话</button>
+        <button class="button primary" type="button" data-print="">打印 / 导出 PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <article class="resume-sheet" data-od-id="resume-soft-version">
+      <aside class="sidebar">
+        <section class="profile" aria-label="候选人信息">
+          <div class="avatar"><img src="mqyik4s4-picture.jpg" alt="张立飞头像"></div>
+          <h1>张立飞</h1>
+          <p class="role-line">Agent 开发工程师 / 全栈工程师</p>
+        </section>
+
+        <section class="side-section" aria-labelledby="basic-info">
+          <h2 class="ribbon" id="basic-info">基本信息</h2>
+          <div class="side-body">
+            <ul class="info-list">
+              <li><b>经验：</b><span>9 年软件工程经验</span></li>
+              <li><b>学历：</b><span>本科 · 软件工程</span></li>
+              <li><b>学校：</b><span>苏州工学院（原常熟理工学院）</span></li>
+              <li><b>城市：</b><span>杭州</span></li>
+              <li><b>期望：</b><span>19-21K · Agent / 后端 / 全栈</span></li>
+              <li><b>优势：</b><span>AI Agent、业务系统工具化、复杂项目交付</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="side-section" aria-labelledby="contact-info">
+          <h2 class="ribbon" id="contact-info">联系方式</h2>
+          <div class="side-body">
+            <ul class="info-list">
+              <li><b>手机：</b><span>18768468433</span></li>
+              <li><b>邮箱：</b><span>leafspace_zhang@163.com</span></li>
+              <li><b>状态：</b><span>可面向 Agent 开发岗位沟通</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="side-section" aria-labelledby="skills-info">
+          <h2 class="ribbon" id="skills-info">掌握技能</h2>
+          <div class="side-body">
+            <div class="skill-block">
+              <p class="skill-group-title">Agent / AI 工程</p>
+              <div class="skill-row"><span>OpenAI</span><div class="bar"><span style="--value: 82%"></span></div></div>
+              <div class="skill-row"><span>LangGraph</span><div class="bar"><span style="--value: 76%"></span></div></div>
+              <div class="skill-row"><span>MCP 工具</span><div class="bar"><span style="--value: 78%"></span></div></div>
+              <div class="skill-row"><span>Vibe Coding</span><div class="bar"><span style="--value: 80%"></span></div></div>
+            </div>
+            <div class="skill-block">
+              <p class="skill-group-title">后端 / 全栈</p>
+              <div class="skill-row"><span>Go / Kratos</span><div class="bar"><span style="--value: 84%"></span></div></div>
+              <div class="skill-row"><span>Python</span><div class="bar"><span style="--value: 78%"></span></div></div>
+              <div class="skill-row"><span>Uniapp 小程序</span><div class="bar"><span style="--value: 76%"></span></div></div>
+            </div>
+            <div class="skill-block">
+              <p class="skill-group-title">工程交付</p>
+              <div class="skill-row"><span>Docker</span><div class="bar"><span style="--value: 78%"></span></div></div>
+              <div class="skill-row"><span>项目管理</span><div class="bar"><span style="--value: 86%"></span></div></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="main">
+        <section class="section" data-od-id="intro">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor"></path><path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"></path></svg>
+            </div>
+            <div class="section-title"><h2>个人简介</h2></div>
+          </div>
+          <div class="intro">
+            <p>5年后端经验，在多个项目中承担重要技术研发任务，用于攻关技术难点 。作为项目经理主导1个项目从研发到维护。技术栈全面，可独立同时维护前后端产品。</p>
+            <p>AI时代全面自学转型Agent后端开发工程师，熟练使用Github Copilot + Deepseek 以及 Codex进行Vide Coding，通过OpenDisign工具进行UI设计，能够单独承担项目从0至1的调研、研发、部署、维护整个生命周期过程。</p>
+            <p>MBTI INTJ，对个人有极强的自我约束，对产品和自身有极高的要求，不满足于安逸的环境，生于忧患死于安乐，不停思考AI时代下中国程序员的真正去路，焦虑转换为动力不断前进。</p>
+          </div>
+        </section>
+
+        <section class="section" data-od-id="work">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor"></path><path d="M4 7h16v12H4z" stroke="currentColor"></path><path d="M4 12h16" stroke="currentColor"></path><path d="M10 12v2h4v-2" stroke="currentColor" stroke-linejoin="round"></path></svg>
+            </div>
+            <div class="section-title"><h2>工作经历</h2></div>
+          </div>
+
+          <article class="entry">
+            <div class="entry-head">
+              <h3>中控技术股份有限公司</h3>
+              <div class="entry-meta">
+                <div class="date">2021-05 - 2026-04</div>
+                <div class="entry-role">全栈工程</div>
+              </div>
+            </div>
+            <div>
+              <p class="entry-subtitle">工作内容</p>
+              <ol>
+                <li>负责后端常规业务设计与开发，输出相应设计说明或功能变更分析说明书。</li>
+                <li>负责部分项目关键技术攻关，完成技术调研与实现，提出分析改进优化点以供迭代。</li>
+                <li>担任项目经理期间负责项目管理流程实施、需求及相关项目文档编写、项目进度跟踪、风险评估、代码审查监督相关工作。期间多次远距离出差对接客户需求，迭代产品版本。</li>
+              </ol>
+              <p class="entry-subtitle">工作业绩</p>
+              <ol>
+                <li>主导中石化设计院对接产品设计研发与现场实施，研发攻关AI识图功能收获院内好评。</li>
+                <li>海外出差沙特阿拉伯对接世界500强石油公司沙特阿美POC项目，完成项目初步技术调研与单个基地部署实施。</li>
+                <li>主导技术攻关与专利对接办登/实审5个（CN 115390548 A、CN 115390548 A、CN 115390548 A、CN 117032109 A、CN 119691948 A），辅助参与专利3个，软件著作权办达（著作权归属公司）（中控智能项目设计软件、中控远程诊断运维软件）2个。</li>
+              </ol>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" data-od-id="projects">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4z" stroke="currentColor"></path><path d="M8 9h8" stroke="currentColor" stroke-linecap="round"></path><path d="M8 13h5" stroke="currentColor" stroke-linecap="round"></path><path d="M17 15l2 2" stroke="currentColor" stroke-linecap="round"></path></svg>
+            </div>
+            <div class="section-title"><h2>项目经历</h2></div>
+          </div>
+
+          <article class="entry">
+            <div class="entry-head">
+              <h3>智慧农场：业务系统 + AI Assistant + Agent 工作流</h3>
+              <div class="entry-meta">
+                <div class="date">2025.05 - 至今</div>
+                <div class="entry-role">Agent 开发 / 全栈工程师</div>
+              </div>
+            </div>
+            <div>
+              <p class="entry-subtitle">项目内容</p>
+              <div class="project-copy">
+                <p><strong>技术栈：</strong>微信小程序 / UniApp、Vue / Element、ThinkPHP、Go、Python、MySQL、Redis、MongoDB、RabbitMQ、Nginx、Docker、宝塔面板、阿里云 OSS、<span class="highlight">OpenAI API、LangGraph、MCP、AI Agent</span>、Prompt 配置、意图识别模型。</p>
+                <p>该项目从2025年5月在职时作为副业引入，2026年离职后正式开启AI赋能业务。我以项目产品/开发/迭代负责人身份推进项目更新，独立承担<span class="highlight">需求拆解、产品设计、技术方案、前后端开发、AI 能力接入、部署脚本维护、问题修复、版本合并和交付闭环</span>工作。</p>
+                <p>如宝农场项目面向农业园区、农场主和用户侧运营场景，整体采用多端多服务架构：微信小程序用户端、Web 后台管理端、PHP/ThinkPHP 主业务服务、独立 Go 服务、Python Agent 服务、MySQL、Redis、MongoDB、RabbitMQ、Nginx、Docker、宝塔面板、WSL/Hyper-V 和阿里云 OSS。</p>
+              </div>
+              <p class="entry-subtitle">项目业绩</p>
+              <ol>
+                <li>2026 年 4 月至 6 月期间，持续推进如宝农场多仓库迭代，覆盖小程序、后台、服务端、AI Assistant、Agent 服务、虚拟云农场和部署工程等模块。</li>
+                <li>完成小程序与服务端多项核心业务优化：活动订单、优惠券、签到、通知、购物车、用户资料、活动评价、认养/土地展示等功能持续迭代，并修复多个线上链路问题，提升用户侧使用稳定性和业务闭环完整度。</li>
+                <li>从零搭建 AI Agent 服务框架，完成 OpenAI 接入、Agent 路由、意图识别、Prompt 配置、MCP 工具定义、Graph 调用流程、调试开关和 Docker 部署支持，初步跑通自然语言请求到业务工具调用的单线流程。</li>
+                <li>完善 AI 助手业务链路，新增会话上下文、token 统计、农场身份透传、消息复制/删除/重试、Markdown 展示等能力，使 AI 对话从单纯聊天逐步接入真实农场业务场景。</li>
+                <li>优化项目协作和交付流程，形成 A→产品/开发负责人→设计→执行/测试 的标准链路，明确需求、设计、测试、修复和上线闭环规则，降低多头沟通、反复返工和碎片化协作成本。</li>
+              </ol>
+              <div class="tags"><span class="tag">OpenAI API</span><span class="tag">LangGraph</span><span class="tag">MCP</span><span class="tag">Go</span><span class="tag">Python</span><span class="tag">ThinkPHP</span></div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-head">
+              <h3>机器人一站开发平台</h3>
+              <div class="entry-meta">
+                <div class="date">2025.02 - 2026.04</div>
+                <div class="entry-role">Golang 后端开发工程师</div>
+              </div>
+            </div>
+            <div>
+              <p class="entry-subtitle">项目内容</p>
+              <div class="project-copy">
+                <p><strong>关键技术栈：</strong>前端 React、后端 Golang 使用 Gin 框架做网关，微服务使用 Kratos 框架；数据库 MySQL；Redis；MQTT：EMQX；OSS/S3 存储：<span class="highlight">SeaweedFS</span>；流媒体：<span class="highlight">SRS</span>；Kubernetes、Docker、Harbor、Prometheus。</p>
+                <p>该产品是面向机器人研发企业的一站式开发平台，深入机器人研发企业的研发体系架构，覆盖机器人技能的一开、二开的开发生命周期。</p>
+                <p>从初始化机器人开始，覆盖基础技能、动作应用、技能编写、技能调试、下载部署、技能版本管理、可视化监控 ROS 消息、仿真验证，最终到技能商城发布，实现机器人的一站式开发。</p>
+              </div>
+              <p class="entry-subtitle">项目业绩</p>
+              <ol>
+                <li>项目开始阶段负责后端架构技术选型与框架搭建，输出第一阶段后端业务功能。</li>
+                <li>负责攻关机器人仿真与 AI 训练相关技术点，均已实现应用。</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-head">
+              <h3>中石化设计院智能设计平台</h3>
+              <div class="entry-meta">
+                <div class="date">2022.03 - 2025.01</div>
+                <div class="entry-role">项目经理 / 全栈开发</div>
+              </div>
+            </div>
+            <div>
+              <p class="entry-subtitle">项目内容</p>
+              <div class="project-copy">
+                <p><strong>技术栈：</strong>Golang 后端 Gin 框架网关、Kratos 微服务、Nacos 配置管理、MySQL 数据库、MongoDB 的 NoSQL 数据库、Redis、C++ 底层 websocketpp 框架服务、<span class="highlight">YOLOv8 视觉模型</span>。</p>
+                <p>为中石化设计院联锁逻辑设计图设计师提供 Web 化新型设计工具。用户通过 Web 端创建并绘制联锁逻辑图，或者通过 <span class="highlight">AI 识图</span>导入 PDF 或图片文件，后台调用 YOLOv8 训练模型解析图片信息，并通过对象关系、连线关系自研解析出联锁逻辑图。</p>
+                <p>用户绘制完联锁逻辑图之后通过仿真功能，后端解析联锁逻辑图的执行逻辑以及当中的 ST 代码，通过自研 ST 编译器转换为 C++ 代码，生成仿真器应用程序。用户仿真完成后，预览并将联锁逻辑图导出为 PDF 文件或 CAD 文件对工作流下层进行交接。</p>
+              </div>
+              <p class="entry-subtitle">项目业绩</p>
+              <ol>
+                <li>主导一阶段项目进展、研发资料、需求规格编写、代码评审组织和项目风险把控。</li>
+                <li>承担 C++ 底层服务，实现仿真器、ST 语言编译器调研与编写、PDF 与 CAD 逻辑图生成。</li>
+                <li>项目二阶段承担项目 AI 识图功能的后端功能研发以及全栈前后端维护。</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-head">
+              <h3>沙特阿美 Aramco POC</h3>
+              <div class="entry-meta">
+                <div class="date">2023.10 - 2024.01</div>
+                <div class="entry-role">海外现场技术支持</div>
+              </div>
+            </div>
+            <div>
+              <p class="entry-subtitle">项目内容</p>
+              <div class="project-copy">
+                <p><strong>关键技术栈：</strong>C# framework，关系型数据库 SQL Server，时序型数据库 <span class="highlight">PI Database</span>，第三方系统 <span class="highlight">Whatsup Gold、MOXA</span>。</p>
+                <p>客户是全球最大的能源公司，他们在沙漠中分布的大大小小采集天然气与石油的基地通过部署 Whatsup Gold 采集服务器与 PC 相关设备的系统资源占用情况，通过 MOXA 采集网关、路由器等网络设备的使用情况。</p>
+                <p>总部希望将基地的 Whatsup Gold 和 MOXA 采集信息存储到基地的时序数据库 PI Server 中，通过基地与总部的网络每天同步到总部服务器中，并在总部服务器中将 PI Server 相关信息通过大屏查询显示出来。</p>
+              </div>
+              <p class="entry-subtitle">项目业绩</p>
+              <ol>
+                <li>海外出差 3 个月，深入客户沙漠中的天然气基地现场调试，完成 POC 项目的初步技术验证。</li>
+                <li>回国后整理输出资料，初步搭建后端大屏平台 Demo，交付给后续接手同事。</li>
+              </ol>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" data-od-id="education">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="m3 8.5 9-4 9 4-9 4-9-4Z" stroke="currentColor" stroke-linejoin="round"></path><path d="M6 10.5v5c2.2 2 9.8 2 12 0v-5" stroke="currentColor" stroke-linejoin="round"></path></svg>
+            </div>
+            <div class="section-title"><h2>教育 / 资质经历</h2></div>
+          </div>
+          <article class="entry">
+            <div class="entry-head">
+              <h3>常熟理工学院 · 软件工程</h3>
+              <div class="entry-meta">
+                <div class="date">2014 - 2018</div>
+                <div class="entry-role">本科</div>
+              </div>
+            </div>
+            <div>
+              <p class="course-line">资格证书：软件设计师、大学英语四级。职业经历中另有 5 个专利对接办登 / 实审、2 个软件著作权，以及工业软件交付和客户现场沟通经验。</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" data-od-id="honors">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" stroke="currentColor"></path><path d="M8 7H5a3 3 0 0 0 3 3" stroke="currentColor"></path><path d="M16 7h3a3 3 0 0 1-3 3" stroke="currentColor"></path><path d="M12 13v4" stroke="currentColor"></path><path d="M8.5 20h7" stroke="currentColor" stroke-linecap="round"></path></svg>
+            </div>
+            <div class="section-title"><h2>投递亮点</h2></div>
+          </div>
+          <ul class="honor-grid">
+            <li>从传统业务系统切入 Agent 化改造，而不是停留在模型调用 Demo。</li>
+            <li>同时具备后端服务、前端入口、部署脚本和项目交付经验。</li>
+            <li>可围绕智慧农场讲清 Agent 路由、MCP 工具、上下文和业务接口。</li>
+            <li>中控工业软件经历可作为复杂工程、客户现场和项目管理背书。</li>
+          </ul>
+        </section>
+      </section>
+    </article>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+  <script>
+    (() => {
+      const toast = document.getElementById("toast");
+      let timer = 0;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(timer);
+        timer = setTimeout(() => toast.classList.remove("show"), 1800);
+      }
+
+      async function copyText(value) {
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch (error) {
+          const input = document.createElement("textarea");
+          input.value = value;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand("copy");
+          input.remove();
+        }
+        showToast("已复制：" + value);
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", () => copyText(button.dataset.copy));
+      });
+
+      document.querySelector("[data-print]").addEventListener("click", () => window.print());
+    })();
+  </script>
+
+
+
+</body></html>
