@@ -1,822 +1,1415 @@
 <!doctype html>
-<html lang="zh-CN"><head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>张立飞 - Agent 开发工程师电子简历</title>
-  <style>
-    :root {
-      --bg: oklch(95% 0.006 110);
-      --paper: oklch(100% 0 0);
-      --side: oklch(87% 0.004 115);
-      --fg: oklch(25% 0.018 110);
-      --muted: oklch(47% 0.012 110);
-      --line: oklch(32% 0.014 110);
-      --soft-line: oklch(78% 0.006 110);
-      --accent: oklch(73% 0.18 132);
-      --accent-dark: oklch(52% 0.15 132);
-      --bar-bg: oklch(76% 0.004 110);
-      --font-display: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
-      --font-body: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
-      --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
-    }
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>张立飞 - AI Agent 应用开发工程师电子简历</title>
+        <style>
+            :root {
+                --bg: oklch(95% 0.006 110);
+                --paper: oklch(100% 0 0);
+                --side: oklch(87% 0.004 115);
+                --fg: oklch(25% 0.018 110);
+                --muted: oklch(47% 0.012 110);
+                --line: oklch(32% 0.014 110);
+                --soft-line: oklch(78% 0.006 110);
+                --accent: oklch(73% 0.18 132);
+                --accent-dark: oklch(52% 0.15 132);
+                --bar-bg: oklch(76% 0.004 110);
+                --font-display:
+                    "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC",
+                    system-ui, sans-serif;
+                --font-body:
+                    "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC",
+                    system-ui, sans-serif;
+                --font-mono:
+                    "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo,
+                    monospace;
+            }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px),
-        linear-gradient(180deg, color-mix(in oklch, var(--accent), transparent 90%), transparent 420px),
-        var(--bg);
-      background-size: 28px 28px, auto, auto;
-      color: var(--fg);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.72;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                background:
+                    linear-gradient(
+                        90deg,
+                        rgba(0, 0, 0, 0.035) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        180deg,
+                        color-mix(in oklch, var(--accent), transparent 90%),
+                        transparent 420px
+                    ),
+                    var(--bg);
+                background-size:
+                    28px 28px,
+                    auto,
+                    auto;
+                color: var(--fg);
+                font-family: var(--font-body);
+                font-size: 16px;
+                line-height: 1.72;
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+            }
 
-    button, a { font: inherit; }
-    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+            button,
+            a {
+                font: inherit;
+            }
+            a {
+                color: inherit;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 4px;
+            }
 
-    .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      display: flex;
-      justify-content: center;
-      padding: 14px;
-      background: color-mix(in oklch, var(--bg), transparent 8%);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
+            .toolbar {
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                display: flex;
+                justify-content: center;
+                padding: 14px;
+                background: color-mix(in oklch, var(--bg), transparent 8%);
+                backdrop-filter: blur(14px);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            }
 
-    .toolbar-inner {
-      width: min(1180px, calc(100vw - 32px));
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+            .toolbar-inner {
+                width: min(1180px, calc(100vw - 32px));
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+            }
 
-    .doc-title {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-    }
+            .doc-title {
+                font-size: 14px;
+                color: var(--muted);
+                letter-spacing: 0.02em;
+            }
 
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .button {
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid color-mix(in oklch, var(--accent-dark), transparent 42%);
-      border-radius: 3px;
-      background: var(--paper);
-      color: var(--fg);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 650;
-      letter-spacing: 0.02em;
-      transition: transform 160ms ease, background 160ms ease;
-    }
-    .button:hover { transform: translateY(-1px); background: color-mix(in oklch, var(--accent), white 72%); }
-    .button.primary { background: var(--accent); color: oklch(99% 0.004 120); }
+            .actions {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .button {
+                min-height: 38px;
+                padding: 0 14px;
+                border: 1px solid
+                    color-mix(in oklch, var(--accent-dark), transparent 42%);
+                border-radius: 3px;
+                background: var(--paper);
+                color: var(--fg);
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 650;
+                letter-spacing: 0.02em;
+                transition:
+                    transform 160ms ease,
+                    background 160ms ease;
+            }
+            .button:hover {
+                transform: translateY(-1px);
+                background: color-mix(in oklch, var(--accent), white 72%);
+            }
+            .button.primary {
+                background: var(--accent);
+                color: oklch(99% 0.004 120);
+            }
 
-    .page-wrap {
-      width: min(1180px, calc(100vw - 32px));
-      margin: 30px auto 72px;
-    }
+            .page-wrap {
+                width: min(1180px, calc(100vw - 32px));
+                margin: 30px auto 72px;
+            }
 
-    .resume-sheet {
-      min-height: 1480px;
-      display: grid;
-      grid-template-columns: 410px minmax(0, 1fr);
-      background: var(--paper);
-      box-shadow: 0 24px 70px rgba(34, 42, 30, 0.18);
-      border: 1px solid rgba(0,0,0,0.06);
-    }
+            .resume-sheet {
+                min-height: 1480px;
+                display: grid;
+                grid-template-columns: 410px minmax(0, 1fr);
+                background: var(--paper);
+                box-shadow: 0 24px 70px rgba(34, 42, 30, 0.18);
+                border: 1px solid rgba(0, 0, 0, 0.06);
+            }
 
-    .sidebar {
-      background: var(--side);
-      padding: 76px 0 54px;
-      position: relative;
-      overflow: hidden;
-    }
+            .sidebar {
+                background: var(--side);
+                padding: 76px 0 54px;
+                position: relative;
+                overflow: hidden;
+            }
 
-    .sidebar::after {
-      content: "";
-      position: absolute;
-      inset: auto -80px 80px auto;
-      width: 180px;
-      height: 180px;
-      border: 1px solid rgba(255,255,255,0.7);
-      transform: rotate(18deg);
-    }
+            .sidebar::after {
+                content: "";
+                position: absolute;
+                inset: auto -80px 80px auto;
+                width: 180px;
+                height: 180px;
+                border: 1px solid rgba(255, 255, 255, 0.7);
+                transform: rotate(18deg);
+            }
 
-    .profile {
-      padding: 0 38px 38px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
+            .profile {
+                padding: 0 38px 38px;
+                text-align: center;
+                position: relative;
+                z-index: 1;
+            }
 
-    .avatar {
-      width: 190px;
-      height: 190px;
-      margin: 0 auto 34px;
-      border-radius: 50%;
-      border: 12px solid #fff;
-      background: oklch(91% 0.03 205);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
+            .avatar {
+                width: 190px;
+                height: 190px;
+                margin: 0 auto 34px;
+                border-radius: 50%;
+                border: 12px solid #fff;
+                background: oklch(91% 0.03 205);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+                overflow: hidden;
+            }
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      object-position: center 36%;
-    }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                object-fit: cover;
+                object-position: center 36%;
+            }
 
-    h1 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 48px;
-      line-height: 1.1;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-    }
+            h1 {
+                margin: 0;
+                font-family: var(--font-display);
+                font-size: 48px;
+                line-height: 1.1;
+                font-weight: 500;
+                letter-spacing: -0.02em;
+            }
 
-    .role-line {
-      margin: 14px 0 0;
-      font-size: 19px;
-      color: var(--fg);
-      letter-spacing: 0.01em;
-    }
+            .role-line {
+                margin: 14px 0 0;
+                font-size: 19px;
+                color: var(--fg);
+                letter-spacing: 0.01em;
+            }
 
-    .ribbon {
-      position: relative;
-      width: calc(100% + 18px);
-      margin: 34px 0 24px 0;
-      padding: 12px 32px;
-      background: var(--accent);
-      color: white;
-      font-size: 26px;
-      line-height: 1.15;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
+            .ribbon {
+                position: relative;
+                width: calc(100% + 18px);
+                margin: 34px 0 24px 0;
+                padding: 12px 32px;
+                background: var(--accent);
+                color: white;
+                font-size: 26px;
+                line-height: 1.15;
+                font-weight: 800;
+                letter-spacing: 0.02em;
+            }
 
-    .ribbon::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      transform: translateX(-18px);
-      width: 0;
-      height: 0;
-      border-top: 26px solid transparent;
-      border-bottom: 26px solid transparent;
-      border-right: 18px solid var(--accent);
-    }
+            .ribbon::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                transform: translateX(-18px);
+                width: 0;
+                height: 0;
+                border-top: 26px solid transparent;
+                border-bottom: 26px solid transparent;
+                border-right: 18px solid var(--accent);
+            }
 
-    .ribbon::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: -13px;
-      width: 0;
-      height: 0;
-      border-left: 18px solid color-mix(in oklch, var(--accent-dark), black 10%);
-      border-bottom: 13px solid transparent;
-    }
+            .ribbon::after {
+                content: "";
+                position: absolute;
+                right: 0;
+                bottom: -13px;
+                width: 0;
+                height: 0;
+                border-left: 18px solid
+                    color-mix(in oklch, var(--accent-dark), black 10%);
+                border-bottom: 13px solid transparent;
+            }
 
-    .side-section { position: relative; z-index: 1; }
-    .side-body { padding: 0 28px; }
+            .side-section {
+                position: relative;
+                z-index: 1;
+            }
+            .side-body {
+                padding: 0 28px;
+            }
 
-    .info-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
+            .info-list {
+                display: grid;
+                gap: 10px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
 
-    .info-list li {
-      display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
-      gap: 6px;
-      align-items: start;
-      color: var(--muted);
-      font-size: 15px;
-    }
+            .info-list li {
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr);
+                gap: 6px;
+                align-items: start;
+                color: var(--muted);
+                font-size: 15px;
+            }
 
-    .info-list b {
-      color: var(--fg);
-      font-weight: 800;
-      letter-spacing: 0.01em;
-    }
+            .info-list b {
+                color: var(--fg);
+                font-weight: 800;
+                letter-spacing: 0.01em;
+            }
 
-    .info-list span {
-      min-width: 0;
-      white-space: nowrap;
-      overflow-wrap: normal;
-      word-break: keep-all;
-    }
+            .info-list span {
+                min-width: 0;
+                white-space: nowrap;
+                overflow-wrap: normal;
+                word-break: keep-all;
+            }
 
-    .skill-block { margin-top: 24px; }
-    .skill-group-title {
-      margin: 0 0 12px;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--fg);
-    }
+            .skill-block {
+                margin-top: 24px;
+            }
+            .skill-group-title {
+                margin: 0 0 12px;
+                font-size: 16px;
+                font-weight: 800;
+                color: var(--fg);
+            }
 
-    .skill-row {
-      display: grid;
-      grid-template-columns: 96px minmax(0, 1fr);
-      gap: 14px;
-      align-items: center;
-      margin: 10px 0;
-      font-size: 15px;
-      font-weight: 650;
-    }
+            .skill-row {
+                display: grid;
+                grid-template-columns: 118px minmax(0, 1fr);
+                gap: 14px;
+                align-items: center;
+                margin: 10px 0;
+                font-size: 15px;
+                font-weight: 650;
+            }
 
-    .bar {
-      height: 11px;
-      background: var(--bar-bg);
-      overflow: hidden;
-    }
+            .bar {
+                height: 11px;
+                background: var(--bar-bg);
+                overflow: hidden;
+            }
 
-    .bar span {
-      display: block;
-      height: 100%;
-      width: var(--value);
-      background: var(--accent);
-    }
+            .bar span {
+                display: block;
+                height: 100%;
+                width: var(--value);
+                background: var(--accent);
+            }
 
-    .main {
-      padding: 78px 66px 58px;
-    }
+            .main {
+                padding: 78px 66px 58px;
+            }
 
-    .section {
-      margin-bottom: 42px;
-    }
+            .section {
+                margin-bottom: 42px;
+            }
 
-    .section-head {
-      display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 22px;
-    }
+            .section-head {
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr);
+                gap: 18px;
+                align-items: center;
+                margin-bottom: 22px;
+            }
 
-    .section-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--accent);
-      color: #fff;
-    }
+            .section-icon {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                background: var(--accent);
+                color: #fff;
+            }
 
-    .section-icon svg {
-      width: 27px;
-      height: 27px;
-      stroke-width: 2;
-    }
+            .section-icon svg {
+                width: 27px;
+                height: 27px;
+                stroke-width: 2;
+            }
 
-    .section-title {
-      padding-bottom: 13px;
-      border-bottom: 2px solid var(--line);
-    }
+            .section-title {
+                padding-bottom: 13px;
+                border-bottom: 2px solid var(--line);
+            }
 
-    h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 31px;
-      line-height: 1.1;
-      font-weight: 850;
-      letter-spacing: -0.02em;
-    }
+            h2 {
+                margin: 0;
+                font-family: var(--font-display);
+                font-size: 31px;
+                line-height: 1.1;
+                font-weight: 850;
+                letter-spacing: -0.02em;
+            }
 
-    .intro {
-      margin: 0;
-      max-width: 70ch;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.86;
-    }
+            .intro {
+                margin: 0;
+                max-width: 70ch;
+                color: var(--muted);
+                font-size: 17px;
+                line-height: 1.86;
+            }
 
-    .intro p {
-      margin: 0;
-    }
+            .intro p {
+                margin: 0;
+            }
 
-    .intro p + p {
-      margin-top: 10px;
-    }
+            .intro p + p {
+                margin-top: 10px;
+            }
 
-    .highlight {
-      color: var(--accent-dark);
-      font-weight: 850;
-    }
+            .highlight {
+                color: var(--accent-dark);
+                font-weight: 850;
+            }
 
-    .entry {
-      margin-top: 26px;
-    }
+            .entry {
+                margin-top: 26px;
+            }
 
-    .entry-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 24px;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid color-mix(in oklch, var(--line), transparent 35%);
-    }
+            .entry-head {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 24px;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid
+                    color-mix(in oklch, var(--line), transparent 35%);
+            }
 
-    .entry-meta {
-      flex: 0 0 auto;
-      min-width: 220px;
-      text-align: right;
-    }
+            .entry-meta {
+                flex: 0 0 auto;
+                min-width: 220px;
+                text-align: right;
+            }
 
-    .date {
-      font-family: var(--font-mono);
-      color: var(--fg);
-      font-size: 14px;
-      line-height: 1.45;
-      font-weight: 760;
-      font-variant-numeric: tabular-nums;
-    }
+            .date {
+                font-family: var(--font-mono);
+                color: var(--fg);
+                font-size: 14px;
+                line-height: 1.45;
+                font-weight: 760;
+                font-variant-numeric: tabular-nums;
+            }
 
-    .entry-role {
-      margin-top: 4px;
-      color: var(--accent-dark);
-      font-size: 14px;
-      line-height: 1.45;
-      font-weight: 850;
-    }
+            .entry-role {
+                margin-top: 4px;
+                color: var(--accent-dark);
+                font-size: 14px;
+                line-height: 1.45;
+                font-weight: 850;
+            }
 
-    .entry h3 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.35;
-      font-weight: 850;
-      letter-spacing: -0.01em;
-    }
+            .entry h3 {
+                margin: 0;
+                font-size: 20px;
+                line-height: 1.35;
+                font-weight: 850;
+                letter-spacing: -0.01em;
+            }
 
-    .entry p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.82;
-    }
+            .entry p {
+                margin: 0;
+                color: var(--muted);
+                font-size: 16px;
+                line-height: 1.82;
+            }
 
-    .project-copy {
-      margin-top: 8px;
-    }
+            .project-copy {
+                margin-top: 8px;
+            }
 
-    .project-copy p + p {
-      margin-top: 8px;
-    }
+            .project-copy p + p {
+                margin-top: 8px;
+            }
 
-    .entry ol {
-      margin: 10px 0 0;
-      padding: 0;
-      list-style: none;
-      counter-reset: item;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.72;
-    }
+            .entry ol {
+                margin: 10px 0 0;
+                padding: 0;
+                list-style: none;
+                counter-reset: item;
+                color: var(--muted);
+                font-size: 15px;
+                line-height: 1.72;
+            }
 
-    .entry li {
-      position: relative;
-      padding-left: 28px;
-      margin-top: 6px;
-      counter-increment: item;
-    }
+            .entry li {
+                position: relative;
+                padding-left: 28px;
+                margin-top: 6px;
+                counter-increment: item;
+            }
 
-    .entry li::before {
-      content: counter(item) "、";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: var(--fg);
-      font-weight: 900;
-    }
+            .entry li::before {
+                content: counter(item) "、";
+                position: absolute;
+                left: 0;
+                top: 0;
+                color: var(--fg);
+                font-weight: 900;
+            }
 
-    .entry-subtitle {
-      margin: 16px 0 6px;
-      color: var(--fg);
-      font-size: 15px;
-      line-height: 1.4;
-      font-weight: 850;
-      letter-spacing: 0.02em;
-    }
+            .entry-subtitle {
+                margin: 16px 0 6px;
+                color: var(--fg);
+                font-size: 15px;
+                line-height: 1.4;
+                font-weight: 850;
+                letter-spacing: 0.02em;
+            }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
+            .tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 12px;
+            }
 
-    .tag {
-      padding: 3px 9px;
-      border: 1px solid color-mix(in oklch, var(--accent-dark), transparent 55%);
-      color: var(--accent-dark);
-      background: color-mix(in oklch, var(--accent), white 82%);
-      font-size: 12px;
-      font-weight: 760;
-      letter-spacing: 0.02em;
-    }
+            .tag {
+                padding: 3px 9px;
+                border: 1px solid
+                    color-mix(in oklch, var(--accent-dark), transparent 55%);
+                color: var(--accent-dark);
+                background: color-mix(in oklch, var(--accent), white 82%);
+                font-size: 12px;
+                font-weight: 760;
+                letter-spacing: 0.02em;
+            }
 
-    .course-line,
-    .honor-grid {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.85;
-    }
+            .course-line,
+            .honor-grid {
+                color: var(--muted);
+                font-size: 16px;
+                line-height: 1.85;
+            }
 
-    .honor-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 30px;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
+            .honor-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px 30px;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
 
-    .honor-grid li::before {
-      content: ">";
-      margin-right: 8px;
-      color: var(--fg);
-      font-weight: 900;
-    }
+            .honor-grid li::before {
+                content: ">";
+                margin-right: 8px;
+                color: var(--fg);
+                font-weight: 900;
+            }
 
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 28px;
-      transform: translateX(-50%) translateY(18px);
-      opacity: 0;
-      padding: 10px 14px;
-      background: var(--fg);
-      color: #fff;
-      border-radius: 2px;
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-      z-index: 40;
-      font-size: 13px;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: 28px;
+                transform: translateX(-50%) translateY(18px);
+                opacity: 0;
+                padding: 10px 14px;
+                background: var(--fg);
+                color: #fff;
+                border-radius: 2px;
+                pointer-events: none;
+                transition:
+                    opacity 180ms ease,
+                    transform 180ms ease;
+                z-index: 40;
+                font-size: 13px;
+            }
+            .toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
 
-    @media (max-width: 980px) {
-      .resume-sheet { grid-template-columns: 1fr; }
-      .sidebar { padding-top: 48px; }
-      .main { padding: 48px 28px; }
-      .entry-head { flex-direction: column; gap: 6px; }
-      .entry-meta {
-        min-width: 0;
-        text-align: left;
-      }
-      .honor-grid { grid-template-columns: 1fr; }
-      .info-list span { white-space: normal; overflow-wrap: anywhere; }
-      .toolbar-inner { align-items: flex-start; flex-direction: column; }
-    }
+            @media (max-width: 980px) {
+                .resume-sheet {
+                    grid-template-columns: 1fr;
+                }
+                .sidebar {
+                    padding-top: 48px;
+                }
+                .main {
+                    padding: 48px 28px;
+                }
+                .entry-head {
+                    flex-direction: column;
+                    gap: 6px;
+                }
+                .entry-meta {
+                    min-width: 0;
+                    text-align: left;
+                }
+                .honor-grid {
+                    grid-template-columns: 1fr;
+                }
+                .info-list span {
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                }
+                .toolbar-inner {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+            }
 
-    @media print {
-      @page { size: A4; margin: 0; }
-      body { background: #fff; }
-      .toolbar, .toast { display: none !important; }
-      .page-wrap { width: 100%; margin: 0; }
-      .resume-sheet {
-        min-height: 297mm;
-        box-shadow: none;
-        border: 0;
-        grid-template-columns: 80mm 1fr;
-      }
-      .sidebar { padding-top: 18mm; }
-      .side-body { padding: 0 6mm; }
-      .info-list li {
-        grid-template-columns: 13mm minmax(0, 1fr);
-        gap: 1.5mm;
-        font-size: 13.2px;
-      }
-      .main { padding: 18mm 14mm 12mm; }
-      .section { break-inside: avoid; margin-bottom: 9mm; }
-      .entry { break-inside: avoid; }
-      .entry-head { gap: 8mm; }
-      .entry-meta { min-width: 44mm; }
-      .button { display: none; }
-    }
-  </style>
-</head>
-<body>
-  <header class="toolbar" aria-label="页面操作">
-    <div class="toolbar-inner">
-      <div class="doc-title"></div>
-      <div class="actions">
-        <button class="button" type="button" data-copy="leafspace_zhang@163.com">复制邮箱</button>
-        <button class="button" type="button" data-copy="18768468433">复制电话</button>
-        <button class="button primary" type="button" data-print="">打印 / 导出 PDF</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="page-wrap">
-    <article class="resume-sheet" data-od-id="resume-soft-version">
-      <aside class="sidebar">
-        <section class="profile" aria-label="候选人信息">
-          <div class="avatar"><img src="mqyik4s4-picture.jpg" alt="张立飞头像"></div>
-          <h1>张立飞</h1>
-          <p class="role-line">Agent 开发工程师 / 全栈工程师</p>
-        </section>
-
-        <section class="side-section" aria-labelledby="basic-info">
-          <h2 class="ribbon" id="basic-info">基本信息</h2>
-          <div class="side-body">
-            <ul class="info-list">
-              <li><b>经验：</b><span>9 年软件工程经验</span></li>
-              <li><b>学历：</b><span>本科 · 软件工程</span></li>
-              <li><b>学校：</b><span>苏州工学院（原常熟理工学院）</span></li>
-              <li><b>城市：</b><span>杭州</span></li>
-              <li><b>期望：</b><span>19-21K · Agent / 后端 / 全栈</span></li>
-              <li><b>优势：</b><span>AI Agent、业务系统工具化、复杂项目交付</span></li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="side-section" aria-labelledby="contact-info">
-          <h2 class="ribbon" id="contact-info">联系方式</h2>
-          <div class="side-body">
-            <ul class="info-list">
-              <li><b>手机：</b><span>18768468433</span></li>
-              <li><b>邮箱：</b><span>leafspace_zhang@163.com</span></li>
-              <li><b>状态：</b><span>可面向 Agent 开发岗位沟通</span></li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="side-section" aria-labelledby="skills-info">
-          <h2 class="ribbon" id="skills-info">掌握技能</h2>
-          <div class="side-body">
-            <div class="skill-block">
-              <p class="skill-group-title">Agent / AI 工程</p>
-              <div class="skill-row"><span>OpenAI</span><div class="bar"><span style="--value: 82%"></span></div></div>
-              <div class="skill-row"><span>LangGraph</span><div class="bar"><span style="--value: 76%"></span></div></div>
-              <div class="skill-row"><span>MCP 工具</span><div class="bar"><span style="--value: 78%"></span></div></div>
-              <div class="skill-row"><span>Vibe Coding</span><div class="bar"><span style="--value: 80%"></span></div></div>
+            @media print {
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+                body {
+                    background: #fff;
+                }
+                .toolbar,
+                .toast {
+                    display: none !important;
+                }
+                .page-wrap {
+                    width: 100%;
+                    margin: 0;
+                }
+                .resume-sheet {
+                    min-height: 297mm;
+                    box-shadow: none;
+                    border: 0;
+                    grid-template-columns: 80mm 1fr;
+                }
+                .sidebar {
+                    padding-top: 18mm;
+                }
+                .side-body {
+                    padding: 0 6mm;
+                }
+                .info-list li {
+                    grid-template-columns: 13mm minmax(0, 1fr);
+                    gap: 1.5mm;
+                    font-size: 13.2px;
+                }
+                .main {
+                    padding: 18mm 14mm 12mm;
+                }
+                .section {
+                    break-inside: avoid;
+                    margin-bottom: 9mm;
+                }
+                .entry {
+                    break-inside: avoid;
+                }
+                .entry-head {
+                    gap: 8mm;
+                }
+                .entry-meta {
+                    min-width: 44mm;
+                }
+                .button {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="toolbar" aria-label="页面操作">
+            <div class="toolbar-inner">
+                <div class="doc-title"></div>
+                <div class="actions">
+                    <button
+                        class="button"
+                        type="button"
+                        data-copy="leafspace_zhang@163.com"
+                    >
+                        复制邮箱
+                    </button>
+                    <button
+                        class="button"
+                        type="button"
+                        data-copy="18768468433"
+                    >
+                        复制电话
+                    </button>
+                    <button class="button primary" type="button" data-print="">
+                        打印 / 导出 PDF
+                    </button>
+                </div>
             </div>
-            <div class="skill-block">
-              <p class="skill-group-title">后端 / 全栈</p>
-              <div class="skill-row"><span>Go / Kratos</span><div class="bar"><span style="--value: 84%"></span></div></div>
-              <div class="skill-row"><span>Python</span><div class="bar"><span style="--value: 78%"></span></div></div>
-              <div class="skill-row"><span>Uniapp 小程序</span><div class="bar"><span style="--value: 76%"></span></div></div>
-            </div>
-            <div class="skill-block">
-              <p class="skill-group-title">工程交付</p>
-              <div class="skill-row"><span>Docker</span><div class="bar"><span style="--value: 78%"></span></div></div>
-              <div class="skill-row"><span>项目管理</span><div class="bar"><span style="--value: 86%"></span></div></div>
-            </div>
-          </div>
-        </section>
-      </aside>
+        </header>
 
-      <section class="main">
-        <section class="section" data-od-id="intro">
-          <div class="section-head">
-            <div class="section-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor"></path><path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"></path></svg>
-            </div>
-            <div class="section-title"><h2>个人简介</h2></div>
-          </div>
-          <div class="intro">
-            <p>5年后端经验，在多个项目中承担重要技术研发任务，用于攻关技术难点 。作为项目经理主导1个项目从研发到维护。技术栈全面，可独立同时维护前后端产品。</p>
-            <p>AI时代全面自学转型Agent后端开发工程师，熟练使用Github Copilot + Deepseek 以及 Codex进行Vide Coding，通过OpenDisign工具进行UI设计，能够单独承担项目从0至1的调研、研发、部署、维护整个生命周期过程。</p>
-            <p>MBTI INTJ，对个人有极强的自我约束，对产品和自身有极高的要求，不满足于安逸的环境，生于忧患死于安乐，不停思考AI时代下中国程序员的真正去路，焦虑转换为动力不断前进。</p>
-          </div>
-        </section>
+        <main class="page-wrap">
+            <article class="resume-sheet" data-od-id="resume-soft-version">
+                <aside class="sidebar">
+                    <section class="profile" aria-label="候选人信息">
+                        <div class="avatar">
+                            <img src="mqyik4s4-picture.jpg" alt="张立飞头像" />
+                        </div>
+                        <h1>张立飞</h1>
+                        <p class="role-line">AI Agent 应用开发工程师</p>
+                    </section>
 
-        <section class="section" data-od-id="work">
-          <div class="section-head">
-            <div class="section-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor"></path><path d="M4 7h16v12H4z" stroke="currentColor"></path><path d="M4 12h16" stroke="currentColor"></path><path d="M10 12v2h4v-2" stroke="currentColor" stroke-linejoin="round"></path></svg>
-            </div>
-            <div class="section-title"><h2>工作经历</h2></div>
-          </div>
+                    <section class="side-section" aria-labelledby="basic-info">
+                        <h2 class="ribbon" id="basic-info">基本信息</h2>
+                        <div class="side-body">
+                            <ul class="info-list">
+                                <li>
+                                    <b>经验：</b><span>9 年软件工程经验</span>
+                                </li>
+                                <li>
+                                    <b>学历：</b><span>本科 · 软件工程</span>
+                                </li>
+                                <li>
+                                    <b>学校：</b
+                                    ><span>苏州工学院（原常熟理工学院）</span>
+                                </li>
+                                <li><b>城市：</b><span>杭州</span></li>
+                                <li>
+                                    <b>期望：</b
+                                    ><span>AI Agent 应用开发工程师</span>
+                                </li>
+                                <li>
+                                    <b>优势：</b
+                                    ><span
+                                        >Agent
+                                        工作流、后端架构、项目交付统筹</span
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
 
-          <article class="entry">
-            <div class="entry-head">
-              <h3>中控技术股份有限公司</h3>
-              <div class="entry-meta">
-                <div class="date">2021-05 - 2026-04</div>
-                <div class="entry-role">全栈工程</div>
-              </div>
-            </div>
-            <div>
-              <p class="entry-subtitle">工作内容</p>
-              <ol>
-                <li>负责后端常规业务设计与开发，输出相应设计说明或功能变更分析说明书。</li>
-                <li>负责部分项目关键技术攻关，完成技术调研与实现，提出分析改进优化点以供迭代。</li>
-                <li>担任项目经理期间负责项目管理流程实施、需求及相关项目文档编写、项目进度跟踪、风险评估、代码审查监督相关工作。期间多次远距离出差对接客户需求，迭代产品版本。</li>
-              </ol>
-              <p class="entry-subtitle">工作业绩</p>
-              <ol>
-                <li>主导中石化设计院对接产品设计研发与现场实施，研发攻关AI识图功能收获院内好评。</li>
-                <li>海外出差沙特阿拉伯对接世界500强石油公司沙特阿美POC项目，完成项目初步技术调研与单个基地部署实施。</li>
-                <li>主导技术攻关与专利对接办登/实审5个（CN 115390548 A、CN 115390548 A、CN 115390548 A、CN 117032109 A、CN 119691948 A），辅助参与专利3个，软件著作权办达（著作权归属公司）（中控智能项目设计软件、中控远程诊断运维软件）2个。</li>
-              </ol>
-            </div>
-          </article>
-        </section>
+                    <section
+                        class="side-section"
+                        aria-labelledby="contact-info"
+                    >
+                        <h2 class="ribbon" id="contact-info">联系方式</h2>
+                        <div class="side-body">
+                            <ul class="info-list">
+                                <li><b>手机：</b><span>18768468433</span></li>
+                                <li>
+                                    <b>邮箱：</b
+                                    ><span>leafspace_zhang@163.com</span>
+                                </li>
+                                <li>
+                                    <b>状态：</b
+                                    ><span
+                                        >可面向 AI Agent 应用开发岗位沟通</span
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
 
-        <section class="section" data-od-id="projects">
-          <div class="section-head">
-            <div class="section-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4z" stroke="currentColor"></path><path d="M8 9h8" stroke="currentColor" stroke-linecap="round"></path><path d="M8 13h5" stroke="currentColor" stroke-linecap="round"></path><path d="M17 15l2 2" stroke="currentColor" stroke-linecap="round"></path></svg>
-            </div>
-            <div class="section-title"><h2>项目经历</h2></div>
-          </div>
+                    <section class="side-section" aria-labelledby="skills-info">
+                        <h2 class="ribbon" id="skills-info">掌握技能</h2>
+                        <div class="side-body">
+                            <div class="skill-block">
+                                <p class="skill-group-title">
+                                    LLM / Agent 工程
+                                </p>
+                                <div class="skill-row">
+                                    <span>OpenAI API</span>
+                                    <div class="bar">
+                                        <span style="--value: 82%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>LangGraph</span>
+                                    <div class="bar">
+                                        <span style="--value: 76%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>Tool Use / MCP</span>
+                                    <div class="bar">
+                                        <span style="--value: 78%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>Prompt 工程</span>
+                                    <div class="bar">
+                                        <span style="--value: 80%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>结构化输出</span>
+                                    <div class="bar">
+                                        <span style="--value: 72%"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-block">
+                                <p class="skill-group-title">后端 / 全栈</p>
+                                <div class="skill-row">
+                                    <span>Go / Kratos</span>
+                                    <div class="bar">
+                                        <span style="--value: 84%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>Python</span>
+                                    <div class="bar">
+                                        <span style="--value: 78%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>API 设计</span>
+                                    <div class="bar">
+                                        <span style="--value: 82%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>Uniapp 小程序</span>
+                                    <div class="bar">
+                                        <span style="--value: 76%"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-block">
+                                <p class="skill-group-title">工程交付</p>
+                                <div class="skill-row">
+                                    <span>Docker</span>
+                                    <div class="bar">
+                                        <span style="--value: 78%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>AI Coding</span>
+                                    <div class="bar">
+                                        <span style="--value: 82%"></span>
+                                    </div>
+                                </div>
+                                <div class="skill-row">
+                                    <span>项目管理</span>
+                                    <div class="bar">
+                                        <span style="--value: 86%"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
 
-          <article class="entry">
-            <div class="entry-head">
-              <h3>智慧农场：业务系统 + AI Assistant + Agent 工作流</h3>
-              <div class="entry-meta">
-                <div class="date">2025.05 - 至今</div>
-                <div class="entry-role">Agent 开发 / 全栈工程师</div>
-              </div>
-            </div>
-            <div>
-              <p class="entry-subtitle">项目内容</p>
-              <div class="project-copy">
-                <p><strong>技术栈：</strong>微信小程序 / UniApp、Vue / Element、ThinkPHP、Go、Python、MySQL、Redis、MongoDB、RabbitMQ、Nginx、Docker、宝塔面板、阿里云 OSS、<span class="highlight">OpenAI API、LangGraph、MCP、AI Agent</span>、Prompt 配置、意图识别模型。</p>
-                <p>该项目从2025年5月在职时作为副业引入，2026年离职后正式开启AI赋能业务。我以项目产品/开发/迭代负责人身份推进项目更新，独立承担<span class="highlight">需求拆解、产品设计、技术方案、前后端开发、AI 能力接入、部署脚本维护、问题修复、版本合并和交付闭环</span>工作。</p>
-                <p>如宝农场项目面向农业园区、农场主和用户侧运营场景，整体采用多端多服务架构：微信小程序用户端、Web 后台管理端、PHP/ThinkPHP 主业务服务、独立 Go 服务、Python Agent 服务、MySQL、Redis、MongoDB、RabbitMQ、Nginx、Docker、宝塔面板、WSL/Hyper-V 和阿里云 OSS。</p>
-              </div>
-              <p class="entry-subtitle">项目业绩</p>
-              <ol>
-                <li>2026 年 4 月至 6 月期间，持续推进如宝农场多仓库迭代，覆盖小程序、后台、服务端、AI Assistant、Agent 服务、虚拟云农场和部署工程等模块。</li>
-                <li>完成小程序与服务端多项核心业务优化：活动订单、优惠券、签到、通知、购物车、用户资料、活动评价、认养/土地展示等功能持续迭代，并修复多个线上链路问题，提升用户侧使用稳定性和业务闭环完整度。</li>
-                <li>从零搭建 AI Agent 服务框架，完成 OpenAI 接入、Agent 路由、意图识别、Prompt 配置、MCP 工具定义、Graph 调用流程、调试开关和 Docker 部署支持，初步跑通自然语言请求到业务工具调用的单线流程。</li>
-                <li>完善 AI 助手业务链路，新增会话上下文、token 统计、农场身份透传、消息复制/删除/重试、Markdown 展示等能力，使 AI 对话从单纯聊天逐步接入真实农场业务场景。</li>
-                <li>优化项目协作和交付流程，形成 A→产品/开发负责人→设计→执行/测试 的标准链路，明确需求、设计、测试、修复和上线闭环规则，降低多头沟通、反复返工和碎片化协作成本。</li>
-              </ol>
-              <div class="tags"><span class="tag">OpenAI API</span><span class="tag">LangGraph</span><span class="tag">MCP</span><span class="tag">Go</span><span class="tag">Python</span><span class="tag">ThinkPHP</span></div>
-            </div>
-          </article>
+                <section class="main">
+                    <section class="section" data-od-id="intro">
+                        <div class="section-head">
+                            <div class="section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M4 21a8 8 0 0 1 16 0"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="section-title"><h2>个人简介</h2></div>
+                        </div>
+                        <div class="intro">
+                            <p>
+                                9 年软件工程经验，早期从 MFC / C++
+                                桌面端软件开发起步，进入中控后快速转向 Golang
+                                后端与全栈研发，长期承担工业软件、机器人平台和业务系统的关键模块研发、技术攻关、客户现场交付与项目管理工作。
+                            </p>
+                            <p>
+                                目标期望岗位为
+                                <span class="highlight"
+                                    >AI Agent 应用开发工程师</span
+                                >。近阶段聚焦 LLM
+                                应用落地，已在智慧农场项目中从零搭建 AI
+                                Assistant / Agent 服务，覆盖 OpenAI API
+                                接入、Agent 路由、意图识别、Prompt 配置、MCP
+                                工具定义、上下文透传、token 统计、Graph
+                                调用流程和 Docker 部署。
+                            </p>
+                            <p>
+                                具备“需求理解 → 技术方案 → AI Coding → 后端接口
+                                → 前端入口 → 测试发布”的端到端交付能力，熟练使用
+                                GitHub Copilot、DeepSeek、Codex 等 AI
+                                辅助编程工具，能够把模糊业务问题拆解为可交付的
+                                Workflow / Agent 工程方案。
+                            </p>
+                            <p>
+                                技术成长路径清晰，能够在项目需要时主动补齐后端、前端、部署、模型训练流程集成和
+                                AI
+                                工程化知识，保持对新技术的高敏感度和学习投入，适应从传统软件到
+                                AI Agent 应用开发的工程范式变化。
+                            </p>
+                        </div>
+                    </section>
 
-          <article class="entry">
-            <div class="entry-head">
-              <h3>机器人一站开发平台</h3>
-              <div class="entry-meta">
-                <div class="date">2025.02 - 2026.04</div>
-                <div class="entry-role">Golang 后端开发工程师</div>
-              </div>
-            </div>
-            <div>
-              <p class="entry-subtitle">项目内容</p>
-              <div class="project-copy">
-                <p><strong>关键技术栈：</strong>前端 React、后端 Golang 使用 Gin 框架做网关，微服务使用 Kratos 框架；数据库 MySQL；Redis；MQTT：EMQX；OSS/S3 存储：<span class="highlight">SeaweedFS</span>；流媒体：<span class="highlight">SRS</span>；Kubernetes、Docker、Harbor、Prometheus。</p>
-                <p>该产品是面向机器人研发企业的一站式开发平台，深入机器人研发企业的研发体系架构，覆盖机器人技能的一开、二开的开发生命周期。</p>
-                <p>从初始化机器人开始，覆盖基础技能、动作应用、技能编写、技能调试、下载部署、技能版本管理、可视化监控 ROS 消息、仿真验证，最终到技能商城发布，实现机器人的一站式开发。</p>
-              </div>
-              <p class="entry-subtitle">项目业绩</p>
-              <ol>
-                <li>项目开始阶段负责后端架构技术选型与框架搭建，输出第一阶段后端业务功能。</li>
-                <li>负责攻关机器人仿真与 AI 训练相关技术点，均已实现应用。</li>
-              </ol>
-            </div>
-          </article>
+                    <section class="section" data-od-id="work">
+                        <div class="section-head">
+                            <div class="section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M4 7h16v12H4z"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M4 12h16"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M10 12v2h4v-2"
+                                        stroke="currentColor"
+                                        stroke-linejoin="round"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="section-title"><h2>工作经历</h2></div>
+                        </div>
 
-          <article class="entry">
-            <div class="entry-head">
-              <h3>中石化设计院智能设计平台</h3>
-              <div class="entry-meta">
-                <div class="date">2022.03 - 2025.01</div>
-                <div class="entry-role">项目经理 / 全栈开发</div>
-              </div>
-            </div>
-            <div>
-              <p class="entry-subtitle">项目内容</p>
-              <div class="project-copy">
-                <p><strong>技术栈：</strong>Golang 后端 Gin 框架网关、Kratos 微服务、Nacos 配置管理、MySQL 数据库、MongoDB 的 NoSQL 数据库、Redis、C++ 底层 websocketpp 框架服务、<span class="highlight">YOLOv8 视觉模型</span>。</p>
-                <p>为中石化设计院联锁逻辑设计图设计师提供 Web 化新型设计工具。用户通过 Web 端创建并绘制联锁逻辑图，或者通过 <span class="highlight">AI 识图</span>导入 PDF 或图片文件，后台调用 YOLOv8 训练模型解析图片信息，并通过对象关系、连线关系自研解析出联锁逻辑图。</p>
-                <p>用户绘制完联锁逻辑图之后通过仿真功能，后端解析联锁逻辑图的执行逻辑以及当中的 ST 代码，通过自研 ST 编译器转换为 C++ 代码，生成仿真器应用程序。用户仿真完成后，预览并将联锁逻辑图导出为 PDF 文件或 CAD 文件对工作流下层进行交接。</p>
-              </div>
-              <p class="entry-subtitle">项目业绩</p>
-              <ol>
-                <li>主导一阶段项目进展、研发资料、需求规格编写、代码评审组织和项目风险把控。</li>
-                <li>承担 C++ 底层服务，实现仿真器、ST 语言编译器调研与编写、PDF 与 CAD 逻辑图生成。</li>
-                <li>项目二阶段承担项目 AI 识图功能的后端功能研发以及全栈前后端维护。</li>
-              </ol>
-            </div>
-          </article>
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>中控技术股份有限公司</h3>
+                                <div class="entry-meta">
+                                    <div class="date">2021-05 - 2026-04</div>
+                                    <div class="entry-role">
+                                        后端开发工程师（C++ / Golang） /
+                                        项目经理
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="entry-subtitle">工作内容</p>
+                                <ol>
+                                    <li>
+                                        2021 年以 C++
+                                        软件工程师岗位入职，实际先承担 Golang
+                                        后端研发工作，参与平台完整性检查工具建设，负责多服务器数据采集、整合、汇总和完整性校验相关能力，沉淀工业现场数据接入、分析处理和业务校验经验。
+                                    </li>
+                                    <li>
+                                        2022
+                                        年中转入中石化设计院智能设计平台，担任项目经理兼核心后端开发，统筹约
+                                        5
+                                        人研发协作（后端、前端），负责需求拆解、任务排期、代码评审、风险把控和客户沟通，同时承担仿真器、图形处理、PDF绘图等底层与核心链路研发。
+                                    </li>
+                                    <li>
+                                        项目进入维护阶段后，在团队缩编情况下独立承接客户需求对接、问题定位、功能优化、版本维护和现场支持，持续支撑项目稳定运行，并在
+                                        2024 年推进 AI
+                                        识图功能的工程化落地；为节约团队协作成本和维护资源，主动承担较大比例前端工程与全栈联调工作，在无
+                                        AI 编程辅助的阶段完成多端问题闭环。
+                                    </li>
+                                    <li>
+                                        2025 年转入机器人一站开发平台，作为 Go
+                                        后端开发工程师参与项目初期架构搭建和基础业务建设；项目稳定后转向核心方案设计、外包研发协同，以及机器人仿真验证、视觉训练流程和物体重建工具链的平台化集成调研。
+                                    </li>
+                                </ol>
+                                <p class="entry-subtitle">工作业绩</p>
+                                <ol>
+                                    <li>
+                                        主导中石化设计院智能设计平台从研发推进到维护交付的核心工作，将客户的联锁逻辑设计流程拆解为
+                                        Web 绘图、图纸识别、逻辑解析、仿真验证和
+                                        PDF / CAD 输出等工程模块，重点攻关 AI
+                                        识图链路并获得客户认可。
+                                    </li>
+                                    <li>
+                                        在沙特阿美 POC
+                                        项目中与解决方案经理协同，先在国内完成技术调研和
+                                        Demo
+                                        验证，再赴沙特现场根据基地真实环境调整工程方案、完成部署验证和客户交互，回国后结合需求搭建后端大屏
+                                        / 中台初版交付后续团队。
+                                    </li>
+                                    <li>
+                                        在机器人平台项目初期完成 Go
+                                        后端核心架构和基础业务框架搭建，后续通过方案设计、技术调研和外包协同支撑平台研发推进，并推动仿真验证、视觉模型训练流程和
+                                        3D 物体重建能力向 B 端平台集成。
+                                    </li>
+                                    <li>
+                                        持续沉淀技术成果：对接 5 个专利办登 /
+                                        实审（CN 115390548 A、CN 117032109 A、CN
+                                        119691948 A 等），辅助参与专利 3
+                                        个，推动 2
+                                        个软件著作权办理（著作权归属公司）。
+                                    </li>
+                                </ol>
+                            </div>
+                        </article>
+                    </section>
 
-          <article class="entry">
-            <div class="entry-head">
-              <h3>沙特阿美 Aramco POC</h3>
-              <div class="entry-meta">
-                <div class="date">2023.10 - 2024.01</div>
-                <div class="entry-role">海外现场技术支持</div>
-              </div>
-            </div>
-            <div>
-              <p class="entry-subtitle">项目内容</p>
-              <div class="project-copy">
-                <p><strong>关键技术栈：</strong>C# framework，关系型数据库 SQL Server，时序型数据库 <span class="highlight">PI Database</span>，第三方系统 <span class="highlight">Whatsup Gold、MOXA</span>。</p>
-                <p>客户是全球最大的能源公司，他们在沙漠中分布的大大小小采集天然气与石油的基地通过部署 Whatsup Gold 采集服务器与 PC 相关设备的系统资源占用情况，通过 MOXA 采集网关、路由器等网络设备的使用情况。</p>
-                <p>总部希望将基地的 Whatsup Gold 和 MOXA 采集信息存储到基地的时序数据库 PI Server 中，通过基地与总部的网络每天同步到总部服务器中，并在总部服务器中将 PI Server 相关信息通过大屏查询显示出来。</p>
-              </div>
-              <p class="entry-subtitle">项目业绩</p>
-              <ol>
-                <li>海外出差 3 个月，深入客户沙漠中的天然气基地现场调试，完成 POC 项目的初步技术验证。</li>
-                <li>回国后整理输出资料，初步搭建后端大屏平台 Demo，交付给后续接手同事。</li>
-              </ol>
-            </div>
-          </article>
-        </section>
+                    <section class="section" data-od-id="projects">
+                        <div class="section-head">
+                            <div class="section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M4 5h16v14H4z"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M8 9h8"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                    ></path>
+                                    <path
+                                        d="M8 13h5"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                    ></path>
+                                    <path
+                                        d="M17 15l2 2"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="section-title"><h2>项目经历</h2></div>
+                        </div>
 
-        <section class="section" data-od-id="education">
-          <div class="section-head">
-            <div class="section-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="m3 8.5 9-4 9 4-9 4-9-4Z" stroke="currentColor" stroke-linejoin="round"></path><path d="M6 10.5v5c2.2 2 9.8 2 12 0v-5" stroke="currentColor" stroke-linejoin="round"></path></svg>
-            </div>
-            <div class="section-title"><h2>教育 / 资质经历</h2></div>
-          </div>
-          <article class="entry">
-            <div class="entry-head">
-              <h3>常熟理工学院 · 软件工程</h3>
-              <div class="entry-meta">
-                <div class="date">2014 - 2018</div>
-                <div class="entry-role">本科</div>
-              </div>
-            </div>
-            <div>
-              <p class="course-line">资格证书：软件设计师、大学英语四级。职业经历中另有 5 个专利对接办登 / 实审、2 个软件著作权，以及工业软件交付和客户现场沟通经验。</p>
-            </div>
-          </article>
-        </section>
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>
+                                    智慧农场：业务系统 + AI Assistant + Agent
+                                    工作流
+                                </h3>
+                                <div class="entry-meta">
+                                    <div class="date">2026.05 - 至今</div>
+                                    <div class="entry-role">
+                                        Agent 开发 / 全栈工程师
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="entry-subtitle">项目内容</p>
+                                <div class="project-copy">
+                                    <p>
+                                        <strong>技术栈：</strong>微信小程序 /
+                                        UniApp、Vue /
+                                        Element、ThinkPHP、Go、Python、MySQL、Redis、MongoDB、RabbitMQ、Nginx、Docker、宝塔面板、阿里云
+                                        OSS、<span class="highlight"
+                                            >OpenAI API、LangGraph、MCP、AI
+                                            Agent、Prompt
+                                            配置、意图识别、结构化输出、上下文管理</span
+                                        >。
+                                    </p>
+                                    <p>
+                                        该项目从 2025 年 5
+                                        月在职时作为副业引入，2026
+                                        年离职后正式开启 AI
+                                        赋能业务。我以项目产品 / 开发 /
+                                        迭代负责人身份推进更新，独立承担<span
+                                            class="highlight"
+                                            >需求拆解、产品设计、技术方案、前后端开发、AI
+                                            能力接入、部署脚本维护、问题修复、版本合并和交付闭环</span
+                                        >工作。
+                                    </p>
+                                    <p>
+                                        项目面向农业园区、农场主和用户侧运营场景，整体采用多端多服务架构：微信小程序用户端、Web
+                                        后台管理端、PHP/ThinkPHP
+                                        主业务服务承载农场、商城、活动、订单、优惠券、签到和用户账户等核心功能；独立
+                                        Go 服务负责 AI Assistant
+                                        会话接口、上下文透传、token
+                                        统计和下层业务接口转发；Python Agent
+                                        服务负责自然语言理解、意图识别、Agent
+                                        路由、Prompt 加载、MCP 工具调用和 Graph
+                                        流程编排。
+                                    </p>
+                                </div>
+                                <p class="entry-subtitle">项目业绩</p>
+                                <ol>
+                                    <li>
+                                        2026 年 4 月至 6
+                                        月持续推进多仓库迭代，覆盖小程序、后台、服务端、AI
+                                        Assistant、Agent
+                                        服务、虚拟云农场和部署工程等模块，形成跨端业务系统与
+                                        AI 服务联调能力。
+                                    </li>
+                                    <li>
+                                        从零搭建 AI Agent 服务框架，完成 OpenAI
+                                        API 接入、Agent 路由、意图识别、Prompt
+                                        配置、MCP 工具定义、Graph
+                                        调用流程、调试开关和 Docker
+                                        部署支持，跑通自然语言请求到业务工具调用的单线流程。
+                                    </li>
+                                    <li>
+                                        完善 AI
+                                        助手业务链路，新增会话上下文、token
+                                        统计、农场身份透传、消息复制 / 删除 /
+                                        重试、Markdown 展示等能力，使 AI
+                                        对话从单纯聊天逐步接入真实农场业务场景。
+                                    </li>
+                                    <li>
+                                        围绕“业务系统 + AI Assistant + Agent
+                                        工作流”进行工程化拆解，将农场身份、用户意图、工具参数和业务接口衔接起来，为后续扩展
+                                        RAG 检索、工具评测、Bad Case
+                                        复盘和多步骤工作流保留接口边界。
+                                    </li>
+                                    <li>
+                                        完成小程序与服务端多项核心业务优化：活动订单、优惠券、签到、通知、购物车、用户资料、活动评价、认养
+                                        /
+                                        土地展示等功能持续迭代，并修复多个线上链路问题，提升用户侧使用稳定性和业务闭环完整度。
+                                    </li>
+                                    <li>
+                                        优化协作和交付流程，形成“产品 /
+                                        开发负责人 → 设计 → 执行 /
+                                        测试”的闭环规则，明确需求、设计、测试、修复和上线边界，降低多头沟通、反复返工和碎片化协作成本。
+                                    </li>
+                                </ol>
+                                <div class="tags">
+                                    <span class="tag">OpenAI API</span
+                                    ><span class="tag">LangGraph</span
+                                    ><span class="tag">MCP</span
+                                    ><span class="tag">Tool Use</span
+                                    ><span class="tag">Prompt</span
+                                    ><span class="tag">Go</span
+                                    ><span class="tag">Python</span>
+                                </div>
+                            </div>
+                        </article>
 
-        <section class="section" data-od-id="honors">
-          <div class="section-head">
-            <div class="section-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" stroke="currentColor"></path><path d="M8 7H5a3 3 0 0 0 3 3" stroke="currentColor"></path><path d="M16 7h3a3 3 0 0 1-3 3" stroke="currentColor"></path><path d="M12 13v4" stroke="currentColor"></path><path d="M8.5 20h7" stroke="currentColor" stroke-linecap="round"></path></svg>
-            </div>
-            <div class="section-title"><h2>投递亮点</h2></div>
-          </div>
-          <ul class="honor-grid">
-            <li>从传统业务系统切入 Agent 化改造，而不是停留在模型调用 Demo。</li>
-            <li>同时具备后端服务、前端入口、部署脚本和项目交付经验。</li>
-            <li>可围绕智慧农场讲清 Agent 路由、MCP 工具、上下文和业务接口。</li>
-            <li>中控工业软件经历可作为复杂工程、客户现场和项目管理背书。</li>
-          </ul>
-        </section>
-      </section>
-    </article>
-  </main>
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>机器人一站开发平台</h3>
+                                <div class="entry-meta">
+                                    <div class="date">2025.02 - 2026.04</div>
+                                    <div class="entry-role">
+                                        Golang 后端开发工程师
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="entry-subtitle">项目内容</p>
+                                <div class="project-copy">
+                                    <p>
+                                        <strong>关键技术栈：</strong>前端
+                                        React、后端 Golang 使用 Gin
+                                        框架做网关，微服务使用 Kratos
+                                        框架；数据库
+                                        MySQL；Redis；MQTT：EMQX；OSS / S3
+                                        存储：<span class="highlight"
+                                            >SeaweedFS</span
+                                        >；流媒体：<span class="highlight"
+                                            >SRS</span
+                                        >；Kubernetes、Docker、Harbor、Prometheus；仿真与视觉流程涉及
+                                        URDF、ROS Topic、Gazebo / Isaac
+                                        Sim、Track Anything、Labelme
+                                        Web、YOLOv11、MLflow、lakeFS、Gaussian
+                                        Splatting、Meshlab / 3D 资产编辑工具。
+                                    </p>
+                                    <p>
+                                        该产品面向机器人研发企业和普通业务用户，目标是将机器人的技能编写、流程编排、仿真验证、部署发布和技能商城管理整合到一个
+                                        B
+                                        端平台中，降低机器人能力开发和二次定制门槛。
+                                    </p>
+                                    <p>
+                                        平台通过 URDF
+                                        描述机器人模型，将机器人模型、用户编写的技能程序和约定目录挂载到服务端容器中；技能通过
+                                        ROS Topic
+                                        与仿真环境交互，驱动机器人动作并完成仿真验证。对于需要桌面交互的
+                                        C++ / 图形化工具，通过容器化、远程桌面 /
+                                        Web
+                                        流媒体映射和浏览器入口封装，使用户可在
+                                        Web 平台中直接访问和操作。
+                                    </p>
+                                </div>
+                                <p class="entry-subtitle">项目业绩</p>
+                                <ol>
+                                    <li>
+                                        项目初期负责 Go
+                                        后端架构技术选型与基础能力搭建，覆盖网关、微服务、鉴权、基础配置、日志、接口规范、文件存储、服务拆分、Docker
+                                        脚本和自动化部署等能力，为后续业务模块和外包协同开发提供统一工程底座。
+                                    </li>
+                                    <li>
+                                        负责机器人仿真验证方案调研与平台集成，将
+                                        Gazebo / Isaac Sim
+                                        等仿真工具容器化接入平台，围绕 URDF
+                                        模型、用户技能程序、ROS Topic
+                                        消息和工作目录映射设计使用流程，使原本偏桌面端的仿真工具能够通过
+                                        Web 平台访问和使用。
+                                    </li>
+                                    <li>
+                                        调研并设计视觉模型训练流程的平台化集成：用户上传视频后提取关键帧，通过
+                                        Track Anything 生成初始 mask，经 Labelme
+                                        Web / 标注工具人工微调后转换为 YOLO
+                                        训练数据集，再通过模板化工程运行 YOLOv11
+                                        训练与预测，并结合 MLflow 和 lakeFS
+                                        管理训练过程、数据集和模型产物。
+                                    </li>
+                                    <li>
+                                        调研并设计 3D
+                                        物体重建流程的平台化集成：基于视频采集生成
+                                        Gaussian Splatting / 2DGS 重建结果，结合
+                                        Meshlab 或替代 3D
+                                        资产编辑工具进行模型清理、拆解和修整，最终输出可用于仿真验证和机器人操作的
+                                        3D 模型资产。
+                                    </li>
+                                    <li>
+                                        该项目与目标岗位中的“复杂业务流程工程化、工具链封装、研发全阶段链路、AI
+                                        辅助研发工具使用”高度相关，可迁移到
+                                        Agent
+                                        工作流搭建、工具调用编排、异步任务处理和系统调试场景。
+                                    </li>
+                                </ol>
+                            </div>
+                        </article>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>中石化设计院智能设计平台</h3>
+                                <div class="entry-meta">
+                                    <div class="date">2022.03 - 2025.01</div>
+                                    <div class="entry-role">
+                                        项目经理 / 全栈开发
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="entry-subtitle">项目内容</p>
+                                <div class="project-copy">
+                                    <p>
+                                        <strong>技术栈：</strong>Golang 后端 Gin
+                                        框架网关、Kratos 微服务、Nacos
+                                        配置管理、MySQL 数据库、MongoDB 的 NoSQL
+                                        数据库、Redis、C++ 底层 websocketpp
+                                        框架服务、<span class="highlight"
+                                            >YOLOv8 视觉模型</span
+                                        >。
+                                    </p>
+                                    <p>
+                                        为中石化设计院联锁逻辑设计图设计师提供
+                                        Web 化新型设计工具。用户通过 Web
+                                        端创建并绘制联锁逻辑图，或者通过
+                                        <span class="highlight">AI 识图</span
+                                        >导入 PDF 或图片文件，后台调用 YOLOv8
+                                        训练模型解析图片信息，并通过对象关系、连线关系自研解析出联锁逻辑图。
+                                    </p>
+                                    <p>
+                                        用户绘制完联锁逻辑图之后通过仿真功能，后端解析联锁逻辑图的执行逻辑以及当中的
+                                        ST 代码，通过自研 ST 编译器转换为 C++
+                                        代码，生成仿真器应用程序。用户仿真完成后，预览并将联锁逻辑图导出为
+                                        PDF 文件或 CAD
+                                        文件对工作流下层进行交接。
+                                    </p>
+                                </div>
+                                <p class="entry-subtitle">项目业绩</p>
+                                <ol>
+                                    <li>
+                                        主导一阶段项目进展、研发资料、需求规格编写、代码评审组织和项目风险把控，将客户侧复杂设计流程拆解为可研发、可验收的工程任务。
+                                    </li>
+                                    <li>
+                                        承担 C++ 底层服务开发，实现仿真器、ST
+                                        语言编译器调研与编写、PDF 与 CAD
+                                        逻辑图生成，支撑专业工作流从设计、仿真到交付的闭环。
+                                    </li>
+                                    <li>
+                                        项目二阶段承担 AI
+                                        识图功能的后端研发以及前后端维护，将
+                                        YOLOv8
+                                        模型识别结果与对象关系、连线关系解析逻辑结合，完成从非结构化图纸到结构化设计数据的转换。
+                                    </li>
+                                </ol>
+                            </div>
+                        </article>
 
-  <script>
-    (() => {
-      const toast = document.getElementById("toast");
-      let timer = 0;
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>沙特阿美 Aramco POC</h3>
+                                <div class="entry-meta">
+                                    <div class="date">2023.10 - 2024.01</div>
+                                    <div class="entry-role">
+                                        海外现场技术支持
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="entry-subtitle">项目内容</p>
+                                <div class="project-copy">
+                                    <p>
+                                        <strong>关键技术栈：</strong>C#
+                                        framework，关系型数据库 SQL
+                                        Server，时序型数据库
+                                        <span class="highlight"
+                                            >PI Database</span
+                                        >，第三方系统
+                                        <span class="highlight"
+                                            >Whatsup Gold、MOXA</span
+                                        >。
+                                    </p>
+                                    <p>
+                                        客户是全球最大的能源公司，他们在沙漠中分布的大大小小采集天然气与石油的基地通过部署
+                                        Whatsup Gold 采集服务器与 PC
+                                        相关设备的系统资源占用情况，通过 MOXA
+                                        采集网关、路由器等网络设备的使用情况。
+                                    </p>
+                                    <p>
+                                        总部希望将基地的 Whatsup Gold 和 MOXA
+                                        采集信息存储到基地的时序数据库 PI Server
+                                        中，通过基地与总部的网络每天同步到总部服务器中，并在总部服务器中将
+                                        PI Server 相关信息通过大屏查询显示出来。
+                                    </p>
+                                </div>
+                                <p class="entry-subtitle">项目业绩</p>
+                                <ol>
+                                    <li>
+                                        海外出差 3
+                                        个月，深入客户沙漠中的天然气基地现场调试，完成
+                                        POC 项目的初步技术验证。
+                                    </li>
+                                    <li>
+                                        回国后整理输出资料，初步搭建后端大屏平台
+                                        Demo，交付给后续接手同事。
+                                    </li>
+                                </ol>
+                            </div>
+                        </article>
+                    </section>
 
-      function showToast(message) {
-        toast.textContent = message;
-        toast.classList.add("show");
-        clearTimeout(timer);
-        timer = setTimeout(() => toast.classList.remove("show"), 1800);
-      }
+                    <section class="section" data-od-id="education">
+                        <div class="section-head">
+                            <div class="section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="m3 8.5 9-4 9 4-9 4-9-4Z"
+                                        stroke="currentColor"
+                                        stroke-linejoin="round"
+                                    ></path>
+                                    <path
+                                        d="M6 10.5v5c2.2 2 9.8 2 12 0v-5"
+                                        stroke="currentColor"
+                                        stroke-linejoin="round"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="section-title">
+                                <h2>教育 / 资质经历</h2>
+                            </div>
+                        </div>
+                        <article class="entry">
+                            <div class="entry-head">
+                                <h3>常熟理工学院 · 软件工程</h3>
+                                <div class="entry-meta">
+                                    <div class="date">2014 - 2018</div>
+                                    <div class="entry-role">本科</div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="course-line">
+                                    资格证书：软件设计师、大学英语四级。职业经历中另有多项专利对接办登
+                                    / 实审、2
+                                    个软件著作权，以及工业软件交付、海外客户现场沟通和复杂工程项目管理经验。
+                                </p>
+                            </div>
+                        </article>
+                    </section>
 
-      async function copyText(value) {
-        try {
-          await navigator.clipboard.writeText(value);
-        } catch (error) {
-          const input = document.createElement("textarea");
-          input.value = value;
-          document.body.appendChild(input);
-          input.select();
-          document.execCommand("copy");
-          input.remove();
-        }
-        showToast("已复制：" + value);
-      }
+                    <section class="section" data-od-id="honors">
+                        <div class="section-head">
+                            <div class="section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M8 4h8v5a4 4 0 0 1-8 0V4Z"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M8 7H5a3 3 0 0 0 3 3"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M16 7h3a3 3 0 0 1-3 3"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M12 13v4"
+                                        stroke="currentColor"
+                                    ></path>
+                                    <path
+                                        d="M8.5 20h7"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="section-title"><h2>投递亮点</h2></div>
+                        </div>
+                        <ul class="honor-grid">
+                            <li>
+                                从真实业务系统切入 Agent 化改造，已落地 OpenAI
+                                接入、Agent 路由、MCP
+                                工具、上下文透传和业务接口转发。
+                            </li>
+                            <li>
+                                具备后端
+                                API、前端入口、部署脚本、测试修复和项目交付闭环能力，适合需要端到端推进的
+                                AI Agent 应用岗位。
+                            </li>
+                            <li>
+                                能够把复杂业务流程拆解为
+                                Prompt、工具参数、结构化输出和 Workflow / Agent
+                                节点，符合医疗 AI 岗位对工程落地的要求。
+                            </li>
+                            <li>
+                                工业软件、机器人平台和海外 POC
+                                经历可证明复杂工程、客户现场、跨系统集成和项目风险把控能力。
+                            </li>
+                            <li>
+                                从桌面端开发迁移到 Go 后端、全栈维护，再到 AI
+                                工程化与 Agent
+                                应用落地，具备持续学习、主动补位和应对技术变化的成长韧性。
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+            </article>
+        </main>
 
-      document.querySelectorAll("[data-copy]").forEach((button) => {
-        button.addEventListener("click", () => copyText(button.dataset.copy));
-      });
+        <div class="toast" id="toast" role="status" aria-live="polite">
+            已复制
+        </div>
 
-      document.querySelector("[data-print]").addEventListener("click", () => window.print());
-    })();
-  </script>
+        <script>
+            (() => {
+                const toast = document.getElementById("toast");
+                let timer = 0;
 
+                function showToast(message) {
+                    toast.textContent = message;
+                    toast.classList.add("show");
+                    clearTimeout(timer);
+                    timer = setTimeout(
+                        () => toast.classList.remove("show"),
+                        1800,
+                    );
+                }
 
+                async function copyText(value) {
+                    try {
+                        await navigator.clipboard.writeText(value);
+                    } catch (error) {
+                        const input = document.createElement("textarea");
+                        input.value = value;
+                        document.body.appendChild(input);
+                        input.select();
+                        document.execCommand("copy");
+                        input.remove();
+                    }
+                    showToast("已复制：" + value);
+                }
 
-</body></html>
+                document.querySelectorAll("[data-copy]").forEach((button) => {
+                    button.addEventListener("click", () =>
+                        copyText(button.dataset.copy),
+                    );
+                });
+
+                document
+                    .querySelector("[data-print]")
+                    .addEventListener("click", () => window.print());
+            })();
+        </script>
+    </body>
+</html>
